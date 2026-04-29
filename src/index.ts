@@ -8,7 +8,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',
+  origin: [
+    'https://agendamento-online-rouge.vercel.app',
+    'https://agendamento-online-rouge.vercel.app/',
+    process.env.FRONTEND_URL || '*'
+  ],
   credentials: true
 }));
 app.use(express.json());
