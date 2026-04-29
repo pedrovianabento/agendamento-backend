@@ -47,3 +47,10 @@ model Agendamento {
   telefoneCliente String
   criadoEm    DateTime @default(now())
 }
+
+model Modelo {
+  id        Int      @id @default(autoincrement())
+  url       String
+  descricao String   @default("")
+  criadoEm  DateTime @default(now())
+}

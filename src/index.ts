@@ -3,6 +3,7 @@ import cors from 'cors';
 import configRoutes from './routes/config';
 import bookingRoutes from './routes/bookings';
 import serviceRoutes from './routes/services';
+import modeloRoutes from './routes/modelos';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
 app.use('/api/config', configRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/services', serviceRoutes);
+app.use('/api/modelos', modeloRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
