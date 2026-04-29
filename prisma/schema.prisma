@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Config {
+  id                  Int      @id @default(1)
+  nomeBarbearia       String   @default("Barbearia Premium")
+  nomeBarbeiro        String   @default("João Silva")
+  slogan              String   @default("Estilo e precisão em cada corte")
+  telefone            String   @default("(11) 99999-9999")
+  whatsapp            String   @default("5511999999999")
+  email               String   @default("contato@barbearia.com")
+  endereco            String   @default("Rua Exemplo, 123 - Centro")
+  cidade              String   @default("São Paulo - SP")
+  instagram           String   @default("https://instagram.com/suabarbearia")
+  diasFuncionamento   Int[]    @default([1, 2, 3, 4, 5, 6])
+  horaInicio          Int      @default(9)
+  horaFim             Int      @default(20)
+  intervaloMinutos    Int      @default(30)
+  almocoInicio        Int?     @default(12)
+  almocoFim           Int?     @default(13)
+  senhaAdmin          String   @default("1234")
+  updatedAt           DateTime @updatedAt
+}
+
+model Servico {
+  id      Int    @id @default(autoincrement())
+  nome    String
+  preco   Float
+  duracao String
+  ordem   Int    @default(0)
+}
+
+model Agendamento {
+  id          Int      @id @default(autoincrement())
+  servico     String
+  preco       Float
+  data        String
+  dataBR      String
+  horario     String
+  nomeCliente String
+  telefoneCliente String
+  criadoEm    DateTime @default(now())
+}
