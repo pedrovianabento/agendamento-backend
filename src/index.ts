@@ -35,4 +35,13 @@ app.use('/api/modelos', modeloRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  
+  // Keep-alive: pinga a si mesmo a cada 14 min para não dormir
+  if (process.env.NODE_ENV === 'production') {
+    setInterval(() => {
+      fetch(`https://agendamento-backend-api-gjcn.onrender.com/`)
+        .then(() => console.log('Keep-alive ping'))
+        .catch(() => {});
+    }, 14 * 60 * 1000);
+  }
 });
