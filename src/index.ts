@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 import configRoutes from './routes/config';
 import bookingRoutes from './routes/bookings';
 import serviceRoutes from './routes/services';
@@ -23,6 +24,9 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+
+// Servir imagens uploaded
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.get('/', (req, res) => {
   res.json({ status: 'ok', service: 'Agendamento Online API' });
