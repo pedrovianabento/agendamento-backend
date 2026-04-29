@@ -7,14 +7,20 @@ import serviceRoutes from './routes/services';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors({
-  origin: [
-    'https://agendamento-online-rouge.vercel.app',
-    'https://agendamento-online-rouge.vercel.app/',
-    process.env.FRONTEND_URL || '*'
-  ],
-  credentials: true
-}));
+// CORS - libera acesso do frontend
+app.use(cors());
+
+// Fallback CORS headers para garantir
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
