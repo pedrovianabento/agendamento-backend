@@ -11,7 +11,24 @@ router.get('/', async (req, res) => {
     if (!config) {
       config = await prisma.config.create({ data: { id: 1 } });
     }
-    const servicos = await prisma.servico.findMany({ orderBy: { ordem: 'asc' } });
+    let servicos = await prisma.servico.findMany({ orderBy: { ordem: 'asc' } });
+    
+    // Se não tem serviços, cria os padrão
+    if (servicos.length === 0) {
+      const defaults = [
+        { nome: "Corte Masculino", preco: 45, duracao: "30 min", ordem: 0 },
+        { nome: "Barba", preco: 35, duracao: "30 min", ordem: 1 },
+        { nome: "Corte + Barba", preco: 70, duracao: "60 min", ordem: 2 },
+        { nome: "Corte Infantil", preco: 35, duracao: "30 min", ordem: 3 },
+        { nome: "Sobrancelha", preco: 15, duracao: "15 min", ordem: 4 },
+        { nome: "Hidratação Capilar", preco: 50, duracao: "40 min", ordem: 5 },
+      ];
+      for (const s of defaults) {
+        await prisma.servico.create({ data: s });
+      }
+      servicos = await prisma.servico.findMany({ orderBy: { ordem: 'asc' } });
+    }
+    
     res.json({ ...config, servicos });
   } catch (e) {
     res.status(500).json({ error: 'Erro ao buscar configurações' });
